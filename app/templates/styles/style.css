@@ -1,0 +1,14 @@
+body            { font-family: sans-serif; background: beige; }
+
+.main{
+    margin: 1em auto;
+    width: 60em;
+    border: 2px solid #9383b3;
+    border-radius: 10px;
+    padding: 0.8em;
+    background: white;
+    position: center;
+    align-items: center;
+}
+
+

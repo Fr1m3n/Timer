@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: sans-serif;
+            background: linear-gradient(45deg, #EECFBA, #C5DDE8);
+        }
+        .main{
+            margin: 1em auto;
+            width: auto;
+            border: 2px solid #9383b3;
+            border-radius: 10px;
+            padding: 0.8em;
+            position: static;
+            text-align: center;
+            font-size: 50px;
+            background-color: rgba(154, 209, 237, 0.1);
+            margin-top: 10px;
+            height: 10em;
+        }
+        .main div{
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background-color: rgba(135, 255, 111, 0.36);
+            border-radius: 10px;
+            padding: 6px;
+            padding-right: 13px;
+            font-size: 20px;
+            /*width: 100px;*/
+            display: inline-block;
+        }
+    </style>
+    <script>
+        var args = {};
+        var bo = true;
+		var a = 100;
+        url = window.location.href;
+        function getArgs() {
+            var queryStr = url.split('?')[1];
+            if (queryStr) {
+                queryStr = queryStr.split('#')[0];
+                var arr = queryStr.split('&');
+                for(var i = 0; i < arr.length; i++){
+                    var a = arr[i].split('=');
+                    args[a[0]] = a[1];
+                }
+                console.debug('111');
+            }
+        }
+        function showDate(where) {
+            alert(args[where] + ' ' + where);
+        }
+
+        function showTime() {
+            alert(args["time"] + ' ' + 'time');
+        }
+
+		setInterval(function(){
+		    var d = args["date"].split('-');
+		    var t = args["time"].split('%3A');
+			var date = new Date(parseInt(d[0]), parseInt(d[1]), parseInt(d[2]), parseInt(t[0]), parseInt(t[1]));
+			var now = new Date();
+			var nowt = document.getElementById("nowt");
+			var table = document.getElementById("table");
+			var hour = document.getElementById("hour");
+			var minutes = document.getElementById("minutes");
+			var h = now.getHours();
+			var m = now.getMinutes();
+			var s = now.getSeconds();
+			var ms = now.getMilliseconds();
+			var hh = date.getHours();
+			var mm = date.getMinutes();
+			var ss = date.getSeconds();
+			nowt.innerHTML = h + ":" + m + ":" + Math.floor(s / 10) + s % 10 + "<br>" + now.getDate() + "-" + now.getMonth() + '-' + now.getFullYear();
+			table.innerHTML = Math.floor(hh / 10) + hh % 10 + ':' + Math.floor(mm / 10) + mm % 10 + ':' + Math.floor(ss / 10) + ss % 10 + "<br>";
+			//hour.innerHTML = now.getTime() - date.getTime();
+            var a = 100 - 100 / 60 * s;
+
+		}, 100);
+
+        window.onload = getArgs();
+    </script>
+    <title></title>
+</head>
+<body>
+    <div class="main">
+        <div class="nowt" id="nowt">
+
+        </div>
+        <div class="nowt" id="table" style="position:relative; left: 30em; top: -2em; background-color: red">
+
+        </div>
+    </div>
+</body>
+</html>
