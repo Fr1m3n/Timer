@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; background: beige; }
+
+        .main{
+            margin: 1em auto;
+            width: 60em;
+            border: 2px solid #9383b3;
+            border-radius: 10px;
+            padding: 0.8em;
+            background: white;
+            position: center;
+            text-align: center;
+        }
+
+        button{
+            background-color: darkkhaki;
+            border-radius: 3px;
+        }
+
+        button:focus{
+            background-color: darkolivegreen;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href= "styles/style.css">
+    <title>{{title}}</title>
+</head>
+
+
+<body>
+
+    <h1 onclick="document.write(new Date().toLocaleDateString())"></h1>
+    <div class = "main" style="height: auto">
+        <form action="index.html">
+            <label for="date">Date: </label>
+            <input type="date" id="date" name="date" list="days" value="2018-03-01"/>
+            <datalist id="days">
+                <option label="Summer 2018">2018-03-01</option>
+                <option label="New 2019 year!">2019-01-01</option>
+            </datalist>
+            <label for="time">Time: </label>
+            <input type="time" id="time" name="time" value="00:00"/>
+            <br>
+            <button type="submit">Go!</button>
+        </form>
+    </div>
+</body>
+</html>
