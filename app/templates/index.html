@@ -7,7 +7,7 @@
             font-family: sans-serif;
             background: linear-gradient(45deg, #EECFBA, #C5DDE8);
         }
-        .main{
+        .header{
             margin: 1em auto;
             width: auto;
             border: 2px solid #9383b3;
@@ -18,19 +18,35 @@
             font-size: 50px;
             background-color: rgba(154, 209, 237, 0.1);
             margin-top: 10px;
-            height: 10em;
+            height: auto;
         }
-        .main div{
+
+        .header div {
             position: absolute;
-            left: 15px;
-            top: 15px;
-            background-color: rgba(135, 255, 111, 0.36);
             border-radius: 10px;
             padding: 6px;
             padding-right: 13px;
-            font-size: 20px;
-            /*width: 100px;*/
             display: inline-block;
+            font-size: 20px;
+        }
+
+        #nowt{
+
+            left: 15px;
+            top: 15px;
+            background-color: rgba(135, 255, 111, 0.36);
+
+        }
+
+        #table {
+            right: 15px;
+            top: 15px;
+            background-color: red;
+            /*width: 5em;*/
+        }
+
+        .main {
+            display: block;
         }
     </style>
     <script>
@@ -60,7 +76,7 @@
 
 		setInterval(function(){
 		    var d = args["date"].split('-');
-		    var t = args["time"].split('%3A');
+		    var t = args["time"].split("%3A");
 			var date = new Date(parseInt(d[0]), parseInt(d[1]), parseInt(d[2]), parseInt(t[0]), parseInt(t[1]));
 			var now = new Date();
 			var nowt = document.getElementById("nowt");
@@ -75,7 +91,7 @@
 			var mm = date.getMinutes();
 			var ss = date.getSeconds();
 			nowt.innerHTML = h + ":" + m + ":" + Math.floor(s / 10) + s % 10 + "<br>" + now.getDate() + "-" + now.getMonth() + '-' + now.getFullYear();
-			table.innerHTML = Math.floor(hh / 10) + hh % 10 + ':' + Math.floor(mm / 10) + mm % 10 + ':' + Math.floor(ss / 10) + ss % 10 + "<br>";
+			table.innerHTML =  Math.floor(hh / 10).toString() + hh % 10 + ':' + Math.floor(mm / 10) + mm % 10 + ':' + Math.floor(ss / 10) + ss % 10 + "<br>" + date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
 			//hour.innerHTML = now.getTime() - date.getTime();
             var a = 100 - 100 / 60 * s;
 
@@ -86,13 +102,16 @@
     <title></title>
 </head>
 <body>
-    <div class="main">
+    <div class="header">
         <div class="nowt" id="nowt">
 
         </div>
-        <div class="nowt" id="table" style="position:relative; left: 30em; top: -2em; background-color: red">
+        <div class="nowt" id="table">
 
         </div>
+    </div>
+    <div class="main">
+
     </div>
 </body>
 </html>
