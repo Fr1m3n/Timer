@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        html, body{
+            height: 100%;
+        }
         body {
             font-family: sans-serif;
-            background: linear-gradient(45deg, #EECFBA, #C5DDE8);
+            background: #b0a3a3; /* Old Browsers */
+            background: -webkit-radial-gradient(bottom right,#b0a3a3,#4288cc); /*Safari 5.1-6*/
+            background: -o-radial-gradient(bottom right,#b0a3a3,#4288cc); /*Opera 11.1-12*/
+            background: -moz-radial-gradient(bottom right,#b0a3a3,#4288cc); /*Fx 3.6-15*/
+            background: radial-gradient(bottom right, #b0a3a3, #4288cc); /*Standard*/
+            background-repeat: no-repeat;
         }
-        .header{
-            margin: 1em auto;
+        .nowt{
+            /*margin: 1em auto;*/
             width: auto;
-            border: 2px solid #9383b3;
+            /*border: 2px solid #9383b3;*/
             border-radius: 10px;
-            padding: 0.8em;
+            padding: 40px;
             position: static;
             text-align: center;
             font-size: 50px;
@@ -24,14 +32,22 @@
         .header div {
             position: absolute;
             border-radius: 10px;
+            border-color: rgba(231,255,69,0.27);
             padding: 6px;
-            padding-right: 13px;
+            /*padding-right: 13px;*/
             display: inline-block;
             font-size: 20px;
         }
 
-        #nowt{
+        #add {
+            /*position: absolute;*/
+            margin: 0 auto;
+            width: 300px;
+            font-family: "Comic Sans MS";
+        }
 
+        #nowt{
+            /*padding-top: 100px;*/
             left: 15px;
             top: 15px;
             background-color: rgba(135, 255, 111, 0.36);
@@ -41,18 +57,67 @@
         #table {
             right: 15px;
             top: 15px;
-            background-color: red;
+            background-color: rgba(255, 153, 4, 0.6);
             /*width: 5em;*/
         }
 
         .main {
             display: block;
         }
+
+	.line {
+		width: auto;
+        position: relative;
+        /*left: 200px;*/
+		display: block;
+		height: 23px;
+        border-radius: 8px;
+        /*margin-left: 30px;*/
+        /*float: right;*/
+	}
+
+    .show {
+        position: center;
+        left: 10px;
+        width: auto;
+        /*float: left;*/
+        font-size: 20px;
+    }
+
+    .block-show {
+        display: inline-block;
+        left: 40px;
+        top: 100px;
+        width: 90%;
+        background-color: rgba(255,56,49,0.37);
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+	#hour_line {
+		background-color: rgba(128, 255, 139, 0.65);
+	}
+
+	#seconds_line {
+		background-color: rgba(9, 40, 255, 0.4);
+	}
+
+        #minutes_line{
+            background-color: rgba(119,77,255,0.6);
+        }
+
+        #days_line {
+            background-color: rgba(192,255,66,0.6);
+        }
     </style>
     <script>
         var args = {};
         var bo = true;
-		var a = 100;
+	    var a = 100;
+	    var ms_to_s = 1000;
+	    var ms_to_m = 60 * ms_to_s;
+	    var ms_to_h = 60 * ms_to_m;
+	    var ms_to_days = 24 * ms_to_h;
         url = window.location.href;
         function getArgs() {
             var queryStr = url.split('?')[1];
@@ -66,12 +131,9 @@
                 console.debug('111');
             }
         }
-        function showDate(where) {
-            alert(args[where] + ' ' + where);
-        }
 
-        function showTime() {
-            alert(args["time"] + ' ' + 'time');
+        function format(a) {
+            return (Math.floor(a / 10).toString() + (a % 10).toString()).toString();
         }
 
 		setInterval(function(){
@@ -79,10 +141,19 @@
 		    var t = args["time"].split("%3A");
 			var date = new Date(parseInt(d[0]), parseInt(d[1]), parseInt(d[2]), parseInt(t[0]), parseInt(t[1]));
 			var now = new Date();
+			console.debug(now.getMonth());
+			now.setMonth(now.getMonth() + 1);
 			var nowt = document.getElementById("nowt");
 			var table = document.getElementById("table");
 			var hour = document.getElementById("hour");
+			var hour_line = document.getElementById("hour_line");
+			var seconds_line = document.getElementById("seconds_line");
+			var days_line = document.getElementById("days_line");
+			var minutes_line = document.getElementById("minutes_line");
 			var minutes = document.getElementById("minutes");
+			var seconds = document.getElementById("seconds");
+			var days = document.getElementById("days");
+			var add = document.getElementById("add");
 			var h = now.getHours();
 			var m = now.getMinutes();
 			var s = now.getSeconds();
@@ -90,28 +161,60 @@
 			var hh = date.getHours();
 			var mm = date.getMinutes();
 			var ss = date.getSeconds();
-			nowt.innerHTML = h + ":" + m + ":" + Math.floor(s / 10) + s % 10 + "<br>" + now.getDate() + "-" + now.getMonth() + '-' + now.getFullYear();
-			table.innerHTML =  Math.floor(hh / 10).toString() + hh % 10 + ':' + Math.floor(mm / 10) + mm % 10 + ':' + Math.floor(ss / 10) + ss % 10 + "<br>" + date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-			//hour.innerHTML = now.getTime() - date.getTime();
-            var a = 100 - 100 / 60 * s;
-
-		}, 100);
+			var delta = Math.abs(now.getTime() - date.getTime());
+			var add_s = '';
+			if(now.getTime() - date.getTime() < 0) {
+			    add_s = "Осталось";
+            } else {
+			    add_s = "Прошло";
+            }
+            nowt.innerHTML = "Сейчас: <br>" + format(h) + ":" + format(m) + ":" + Math.floor(s / 10) + s % 10 + "<br>" + format(now.getDate()) + "-" + format(now.getMonth()) + '-' + now.getFullYear();
+            add.innerText = add_s;
+			table.innerHTML =  "Выбранная дата: <br>" + Math.floor(hh / 10).toString() + hh % 10 + ':' + Math.floor(mm / 10) + mm % 10 + ':' + Math.floor(ss / 10) + ss % 10 + "<br>" + format(date.getDate()) + '-' + format(date.getMonth()) + '-' + date.getFullYear();
+			hour.innerText = "Часов: " + Math.floor(delta / ms_to_h);
+			minutes.innerText = "Минут: " + Math.floor(delta / ms_to_m);
+			seconds.innerText = "Секунд: " + Math.floor(delta / ms_to_s);
+			days.innerHTML = "Дней: " + Math.floor(delta / ms_to_days);
+            var hl = Math.floor(100 / ms_to_h * (delta % ms_to_h));
+			var sl = Math.floor(100 / ms_to_s * (delta % ms_to_s));
+			var dl = Math.floor(100 / ms_to_days * (delta % ms_to_days));
+            var ml = Math.floor(100 / ms_to_m * (delta % ms_to_m));
+			//console.debug(a);
+            days_line.style.width = dl + "%";
+			hour_line.style.width = hl + "%";
+			seconds_line.style.width = sl + "%";
+			minutes_line.style.width = ml + "%";
+		}, 1);
 
         window.onload = getArgs();
     </script>
     <title></title>
 </head>
-<body>
+<body id="change">
+
     <div class="header">
-        <div class="nowt" id="nowt">
+        <div class="nowt" id="nowt"></div>
 
-        </div>
-        <div class="nowt" id="table">
-
-        </div>
+        <div class="nowt" id="table"></div>
     </div>
-    <div class="main">
-
+    <div class="nowt" style="padding-top: 100px">
+        <div id="add"></div>
+        <div class="block-show" style="background-color: rgba(255,206,86,0.37)">
+	        <div class="show" id="days"></div>
+	        <div class="line" id="days_line"></div>
+        </div>
+        <div class="block-show" style="background-color: rgba(168,255,143,0.37)">
+	        <div class="show" id="hour"></div>
+            <div class="line" id="hour_line"></div>
+        </div>
+        <div class="block-show" style="background-color: rgba(171,209,255,0.37)">
+	        <div class="show" id="minutes"></div>
+            <div class="line" id="minutes_line"></div>
+        </div>
+        <div class="block-show" style="background-color: rgba(255,143,196,0.37)">
+	        <div class="show" id="seconds"> </div>
+            <div class="line" id="seconds_line"></div>
+        </div>
     </div>
 </body>
 </html>

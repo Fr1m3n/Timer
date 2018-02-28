@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: sans-serif; background: beige; }
+        html, body{
+            height: 100%;
+        }
+        body {
+            font-family: sans-serif;
+            background: #b0a3a3; /* Old Browsers */
+            background: -webkit-radial-gradient(bottom right,#b0a3a3,#4288cc); /*Safari 5.1-6*/
+            background: -o-radial-gradient(bottom right,#b0a3a3,#4288cc); /*Opera 11.1-12*/
+            background: -moz-radial-gradient(bottom right,#b0a3a3,#4288cc); /*Fx 3.6-15*/
+            background: radial-gradient(bottom right, #b0a3a3, #4288cc); /*Standard*/
+            background-repeat: no-repeat;
+        }
 
         .main{
             margin: 1em auto;
@@ -17,7 +28,7 @@
         }
 
         button{
-            background-color: darkkhaki;
+            background-color: #514dbd;
             border-radius: 3px;
         }
 
@@ -36,13 +47,13 @@
     <h1 onclick="document.write(new Date().toLocaleDateString())"></h1>
     <div class = "main" style="height: auto">
         <form action="index.html">
-            <label for="date">Date: </label>
-            <input type="date" id="date" name="date" list="days" value="2018-03-01"/>
+            <label for="date">Дата: </label>
+            <input type="date" id="date" name="date" list="days" value="2018-06-01"/>
             <datalist id="days">
-                <option label="Summer 2018">2018-03-01</option>
+                <option label="Summer 2018">2018-06-01</option>
                 <option label="New 2019 year!">2019-01-01</option>
             </datalist>
-            <label for="time">Time: </label>
+            <label for="time">Время: </label>
             <input type="time" id="time" name="time" value="00:00"/>
             <br>
             <button type="submit">Go!</button>
